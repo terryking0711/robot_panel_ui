@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDK Robotics - Robot Status Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-name">
+      <span>T</span><span>D</span><span>K</span>
+      <small>ROBOTICS</small>
+    </div>
+    <div class="brand-tagline">
+      <span>BUILD</span>
+      <span>EXPLORE</span>
+      <span>BEYOND</span>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="status">ROBOT STATUS</button>
+    <a class="tab" href="#" target="_blank" rel="noopener" id="robot-panel-link">ROBOT PANEL <span class="ext-icon">&#8599;</span></a>
+  </nav>
+
+  <div class="event-label">
+    <span class="event-line1">// 2025 TDK</span>
+    <span class="event-line2">ROBOTICS COMPETITION</span>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ================= LEFT COLUMN ================= -->
+  <aside class="left-col">
+
+    <section class="panel" id="panel-system-status">
+      <h2 class="panel-title">SYSTEM STATUS <span class="deco">////</span></h2>
+      <ul class="status-list" id="system-status-list">
+        <li class="status-item" data-key="chassis">
+          <span class="dot" data-dot="chassis"></span>
+          <span class="label">CHASSIS</span>
+        </li>
+        <li class="status-item" data-key="mission">
+          <span class="dot" data-dot="mission"></span>
+          <span class="label">MISSION</span>
+        </li>
+        <li class="status-item" data-key="vision">
+          <span class="dot" data-dot="vision"></span>
+          <span class="label">VISION</span>
+        </li>
+        <li class="status-item" data-key="navigation">
+          <span class="dot" data-dot="navigation"></span>
+          <span class="label">NAVIGATION</span>
+        </li>
+        <li class="status-item" data-key="localization">
+          <span class="dot" data-dot="localization"></span>
+          <span class="label">LOCALIZATION</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" id="panel-mission-reset">
+      <h2 class="panel-title">MISSION RESET <span class="deco">////</span></h2>
+      <ul class="mission-list" id="mission-reset-list">
+        <li class="mission-item" data-fsm-reset-stage2>
+          <span class="mission-icon">&#9678;</span>
+          <span class="mission-text">
+            <strong>RESET TO STAGE 2</strong>
+            <small data-start-status>&rarr; RESTART STAGE 2, KEEP MATCH TIMER</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item" data-fsm-reset>
+          <span class="mission-icon">&#9678;</span>
+          <span class="mission-text">
+            <strong>RESET TO STAGE 3</strong>
+            <small data-start-status>&rarr; CORNER &rarr; STAGE3_ENTRY, KEEP MATCH TIMER</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item mission-item-start" data-start-side="normal">
+          <span class="mission-icon">&#9654;</span>
+          <span class="mission-text">
+            <strong>START NORMAL</strong>
+            <small data-start-status>&rarr; RUN ROBOT_FSM_MAIN (MAP_NORMAL)</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item mission-item-start" data-start-side="mirror">
+          <span class="mission-icon">&#9654;</span>
+          <span class="mission-text">
+            <strong>START MIRROR</strong>
+            <small data-start-status>&rarr; RUN ROBOT_FSM_MAIN (MAP_MIRROR)</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item mission-item-start" data-start-side="mirror_v2">
+          <span class="mission-icon">&#9654;</span>
+          <span class="mission-text">
+            <strong>START MIRROR V2</strong>
+            <small data-start-status>&rarr; RUN ROBOT_FSM_MAIN (MAP_MIRROR, ROW 3 → 1 → 2)</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item mission-item-start" data-start-side="dit">
+          <span class="mission-icon">&#9654;</span>
+          <span class="mission-text">
+            <strong>START DIT</strong>
+            <small data-start-status>&rarr; RUN ROBOT_FSM_MAIN (DIT, SKIP STAGE 2)</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+        <li class="mission-item mission-item-stop" data-fsm-stop>
+          <span class="mission-icon">&#9632;</span>
+          <span class="mission-text">
+            <strong>STOP ROBOT_FSM_MAIN</strong>
+            <small data-start-status>&rarr; CMD_VEL = 0, CANCEL NAV2, KILL FSM</small>
+          </span>
+          <span class="mission-arrow">&rsaquo;</span>
+        </li>
+      </ul>
+    </section>
+
+  </aside>
+
+  <!-- ================= RIGHT COLUMN (MODEL VIEWER) ================= -->
+  <section class="model-viewer">
+    <div class="mv-corner mv-top-left">// ROBOT MODEL</div>
+
+    <section class="panel mv-overlay mv-overlay-top-left" id="panel-device-status">
+      <h2 class="panel-title">DEVICE STATUS <span class="deco">////</span></h2>
+      <ul class="status-list" id="device-status-list">
+        <li class="status-item" data-key="odometry">
+          <span class="dot" data-dot="odometry"></span>
+          <span class="label">ODOMETRY</span>
+        </li>
+        <li class="status-item" data-key="front_lidar">
+          <span class="dot" data-dot="front_lidar"></span>
+          <span class="label">FRONT_LIDAR</span>
+        </li>
+        <li class="status-item" data-key="rear_lidar">
+          <span class="dot" data-dot="rear_lidar"></span>
+          <span class="label">REAR_LIDAR</span>
+        </li>
+        <li class="status-item" data-key="camera">
+          <span class="dot" data-dot="camera"></span>
+          <span class="label">CAMERA</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="mv-corner mv-top-right">
+      <div class="mv-title">TDK-ROBOT</div>
+      <!-- Host (laptop) battery, from /host/battery (robot_panel_bridge battery_monitor) -->
+      <dl class="host-battery" id="host-battery" data-level="unknown">
+        <dt>BATTERY</dt>
+        <dd class="hb-level">
+          <span class="hb-bar"><span class="hb-fill" id="hb-fill"></span></span>
+          <span id="hb-percent">--%</span>
+        </dd>
+        <dt>POWER</dt>
+        <dd id="hb-power">-- W</dd>
+        <dt>STATUS</dt>
+        <dd id="hb-status">NO DATA</dd>
+        <dt id="hb-time-label">REMAINING</dt>
+        <dd id="hb-time">--</dd>
+      </dl>
+    </div>
+
+    <!-- Replaceable CAD / robot image. Swap CONFIG.robotModelImage to change it, or
+         replace this <img> with a 3D viewer (e.g. <model-viewer>) later. -->
+    <div class="mv-image-wrap">
+      <img id="robot-model-img" src="assets/robot-model.png" alt="Robot model"
+           onerror="this.style.display='none'; document.getElementById('robot-model-fallback').style.display='flex';">
+      <div id="robot-model-fallback" class="mv-fallback">
+        <span>ROBOT MODEL IMAGE</span>
+        <small>put your CAD render at assets/robot-model.png<br>or set CONFIG.robotModelImage</small>
+      </div>
+    </div>
+
+    <!-- Match countdown, from /fsm/match_remaining (robot_panel_bridge fsm_launcher) -->
+    <section class="panel mv-overlay mv-overlay-bottom-left" id="panel-match-timer">
+      <h2 class="panel-title">MATCH TIMER <span class="deco">////</span></h2>
+      <div class="match-timer" id="match-timer" data-level="unknown">--:--</div>
+    </section>
+
+    <div class="mv-corner mv-bottom-left">FRONT_LEFT_VIEW</div>
+    <div class="mv-corner mv-bottom-right">// READY FOR COMPETITION</div>
+
+    <section class="panel mv-overlay mv-overlay-bottom-right" id="panel-robot-state">
+      <h2 class="panel-title">ROBOT STATE <span class="deco">////</span></h2>
+      <ul class="state-list" id="robot-state-list">
+        <li class="state-item" data-key="communication_ready">
+          <span class="dot" data-dot="communication_ready"></span>
+          <span class="label">COMMUNICATION READY</span>
+        </li>
+        <li class="state-item" data-key="localization_ready">
+          <span class="dot" data-dot="localization_ready"></span>
+          <span class="label">LOCALIZATION READY</span>
+        </li>
+        <li class="state-item" data-key="fsm_running">
+          <span class="dot" data-dot="fsm_running"></span>
+          <span class="label">FSM_RUNNING</span>
+        </li>
+      </ul>
+    </section>
+  </section>
+
+</main>
+
+<script src="vendor/roslib.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
